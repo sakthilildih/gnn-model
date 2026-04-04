@@ -6,8 +6,11 @@ The dataset, which simulates 40,000 real-world AML clusters (including hybrid ro
 
 ## Getting Started
 
-1. **Unzip the Dataset:**
-   The generated dataset is zipped for storage. Unzip `aml_dataset.zip` into the project root directory. This will create the `aml_dataset/` directory with `transactions.csv` (~220 MB), `cluster_summary.csv`, and other metadata files.
+1. **Unzip the Data & Cache:**
+   The generated dataset and graph cache are zipped for storage to bypass GitHub limits. 
+   Unzip both files into the project root directory:
+   - Unzipping `aml_dataset.zip` creates the `aml_dataset/` directory with `transactions.csv` (~220 MB) and cluster mappings.
+   - Unzipping `graph_cache.zip` restores the built PyTorch graph data `graph_cache/graph_data.pt` so you don't even have to wait 2 minutes for Louvain clustering to run!
    
 2. **Setup virtual environment & requirements:**
    Ensure you have installed:
