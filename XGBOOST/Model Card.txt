@@ -1,0 +1,105 @@
+Model Card - Transaction Fraud Detection Model
+Model Overview
+
+This model is designed to detect suspicious financial transaction behaviour that may indicate money laundering or mule account activity. It analyzes short-term transaction patterns of an account and predicts the probability that the account is involved in fraudulent activity.
+
+The model examines behavioural features such as transaction frequency, transaction amounts, network relationships between senders and receivers, and transaction timing patterns. These behavioural indicators are commonly used in Anti-Money Laundering (AML) monitoring systems.
+
+The output of the model is a fraud probability score between 0 and 1. A configurable threshold is applied to classify the transaction pattern as suspicious or normal.
+
+Input Features
+
+The model uses 18 behavioural features derived from transaction history within short time windows.
+
+1. Transaction Volume Features
+
+in_txn_5m
+Number of incoming transactions received by the account in the last 5 minutes.
+
+out_txn_5m
+Number of outgoing transactions sent by the account in the last 5 minutes.
+
+2. Transaction Amount Features
+
+in_amt_5m
+Total monetary value of incoming transactions in the last 5 minutes.
+
+out_amt_5m
+Total monetary value of outgoing transactions in the last 5 minutes.
+
+3. Temporal Behaviour Features
+
+avg_tx_gap
+Average time gap between consecutive transactions.
+
+recv_send_gap
+Average time between receiving funds and sending them out. Short gaps may indicate rapid fund movement typical of laundering.
+
+4. Rapid Movement Indicators
+
+pct_forwarded_60s
+Percentage of incoming funds forwarded within 60 seconds. High values indicate rapid pass-through behaviour.
+
+pass_through_ratio
+Ratio of outgoing funds to incoming funds. High ratios suggest funds are quickly redistributed.
+
+5. Flow Pattern Features
+
+in_out_ratio
+Ratio of incoming transaction count to outgoing transaction count.
+
+This helps detect patterns such as:
+
+Fan-in behaviour (many accounts sending to one)
+Fan-out behaviour (one account sending to many)
+6. Network Relationship Features
+
+uniq_senders_10m
+Number of unique sender accounts interacting with the account within 10 minutes.
+
+uniq_receivers_10m
+Number of unique receiver accounts interacting with the account within 10 minutes.
+
+new_counterparty_pct
+Percentage of transactions involving previously unseen counterparties.
+
+7. Geographic Risk Indicators
+
+region_count
+Number of different geographic regions involved in recent transactions.
+
+sender_region_risk
+Risk score associated with the regions from which funds originate.
+
+receiver_region_risk
+Risk score associated with the regions receiving funds.
+
+corridor_multiplier
+Risk multiplier based on known high-risk transaction corridors between regions.
+
+8. Burst Behaviour Indicators
+
+fanin_burst
+Indicator of sudden bursts of incoming transactions from multiple accounts.
+
+fanout_burst
+Indicator of sudden bursts of outgoing transactions to multiple accounts.
+
+Model Output
+
+The model outputs:
+
+Fraud Probability (0–1)
+
+Example:
+
+Fraud Probability: 0.74
+Prediction (threshold = 0.3): Fraud
+
+A threshold is applied to convert the probability score into a classification:
+
+Probability	Classification
+< Threshold	Normal
+≥ Threshold	Suspicious
+
+For this implementation, a threshold of 0.3 is used to prioritize higher fraud detection recall.

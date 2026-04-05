@@ -76,6 +76,15 @@ OOD_MIN_RISK_SCORE  = 0.50 # only flag OOD if node is also suspicious
 # ─── Cluster output ───────────────────────────────────────────────────────────
 CLUSTER_RISK_THRESHOLD = 0.50   # flag cluster if mean node risk > this
 
+# ─── Valid transaction types (must match generate_aml_dataset.py) ─────────────
+TRANSACTION_TYPES = ["UPI", "ATM", "App", "Wallet", "Web"]
+
+# ─── Production pipeline ──────────────────────────────────────────────────────
+PRODUCTION_BATCH_WINDOW_MS = 500      # accumulate suspicious txns over 500ms
+MIN_RING_SIZE              = 3        # skip rings with fewer accounts
+MAX_INFER_NODES            = 5_000    # safety cap on nodes per inference batch
+TXN_STORE_MAX_TXN          = 2_000_000  # max transactions in memory store
+
 # ─── Node feature columns (must match build_graph.py + inference.py) ──────────
 FEATURE_COLS = [
     "sent_count", "recv_count", "total_degree",

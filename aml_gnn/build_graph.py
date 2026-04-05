@@ -202,15 +202,16 @@ def build_graph(force_rebuild: bool = False):
     torch.save(data, graph_path)
 
     meta = {
-        "acc_to_idx":         acc_to_idx,
-        "idx_to_acc":         {v: k for k, v in acc_to_idx.items()},
-        "feature_cols":       FEATURE_COLS,
-        "feature_mean":       f_mean.tolist(),
-        "feature_std":        f_std.tolist(),
-        "n_nodes":            n_nodes,
-        "cluster_pattern":    cluster_pattern,
-        "cluster_split":      cluster_split,
-        "acc_cluster":        acc_cluster,
+        "acc_to_idx":              acc_to_idx,
+        "idx_to_acc":              {v: k for k, v in acc_to_idx.items()},
+        "feature_cols":            FEATURE_COLS,
+        "feature_mean":            f_mean.tolist(),
+        "feature_std":             f_std.tolist(),
+        "n_nodes":                 n_nodes,
+        "cluster_pattern":         cluster_pattern,
+        "cluster_split":           cluster_split,
+        "acc_cluster":             acc_cluster,
+        "louvain_max_communities": int(max_comm),  # used by production inference
         # amount per node (for blocked amount report)
         "node_total_amount":  node_df.set_index("account_id")["total_amount_linked"].to_dict(),
         # cluster → sum of all transaction amounts (ground-truth for report)
